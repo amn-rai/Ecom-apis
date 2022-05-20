@@ -27,15 +27,49 @@ function validationObj(method: string): any {
                         'string.min': 'User Name must have at least 3 characters',
                         'string.pattern.base': 'User name is not valid'
                     }),
-                // address: Joi.string(),
                 firstName: Joi.string().min(3).max(100).required(),
                 role: Joi.number().equal(1).required(),
                 lastName: Joi.string().min(3).max(100).required(),
                 phone: Joi.string().min(7).max(12).required(),
-                designation: Joi.string().min(2).max(100).required()
+                designation: Joi.string().min(2).max(100).required(),
+                countryCode: Joi.string().min(2).max(100).required(),
+                //Company validation rules started
+                name: Joi.string().min(2).max(100).required(),
+                GSTNumber: Joi.string(),
+                website: Joi.string().uri().required(),
+                companyRegistrationNumber: Joi.string().min(2).max(100).required(),
+                addressLine1: Joi.string().min(2).max(100).required(),
+                addressLine2: Joi.string().min(2).max(100).required(),
+                country: Joi.string().min(2).max(100).required(),
+                state: Joi.string().min(2).max(100).required(),
+                city: Joi.string().min(2).max(100).required(),
+                zipCode: Joi.string().min(2).max(100).required(),
+                company_phone: Joi.string().min(7).max(12).required(),
+                company_email: Joi.string().email().required()
             });
         }
-
+        case 'getCompany': {
+            return Joi.object({
+                id: Joi.custom(isObjectId).required()
+            });
+        }
+        case 'createCompany': {
+            return Joi.object({
+                name: Joi.string().min(2).max(100).required(),
+                GSTNumber: Joi.string(),
+                website: Joi.string().uri().required(),
+                companyRegistrationNumber: Joi.string().min(2).max(100).required(),
+                addressLine1: Joi.string().min(2).max(100).required(),
+                addressLine2: Joi.string().min(2).max(100).required(),
+                country: Joi.string().min(2).max(100).required(),
+                state: Joi.string().min(2).max(100).required(),
+                city: Joi.string().min(2).max(100).required(),
+                zipCode: Joi.string().min(2).max(100).required(),
+                phone: Joi.string().min(7).max(12).required(),
+                email: Joi.string().email().required(),
+                id: Joi.custom(isObjectId)
+            });
+        }
         case 'userNameExist': {
             return Joi.object({
                 username: Joi.string()
@@ -95,7 +129,6 @@ function validationError(schemaObj: any, method: string, res: Response): boolean
 function testMiddleWare(req: any, res: any) {
     console.log('testMiddleWare fired');
 }
-
 function isObjectId(value, helper) {
     if (!isValidObjectId(value)) {
         return helper.error('any.invalid');

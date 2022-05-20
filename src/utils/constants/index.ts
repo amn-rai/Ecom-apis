@@ -5,6 +5,7 @@ export const constants = {
 };
 export const messages = {
     INVALID_ROLE: 'Invalid user role.',
+    Ad_DEACTIVATED: 'Your account is deactivated. Please contact support team.',
     USER_EMAIL_EXIST: 'Email already exists.',
     USER_NAME_EXIST: 'Username already exists.',
     PASSWORD_CHANGED: 'Your password is changed successfully.',

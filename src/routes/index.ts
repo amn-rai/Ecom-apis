@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import adminRouter from './Admin';
+import rtAdminRouter from './RTAdmin';
 import authRouter from './Auth';
 const router: Router = Router();
 
-router.use('/admin', adminRouter);
+router.use('/rtAdmin', rtAdminRouter);
 router.use('/auth', authRouter);
 
 export default router;

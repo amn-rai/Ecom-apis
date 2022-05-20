@@ -5,7 +5,7 @@ import { validationError } from '../../validators';
 import { messages, constants } from '../../utils/constants';
 import { generateSecurePassword } from '../../utils';
 let userId = {};
-const authenticate = function (req, res, next) {
+const authenticate = (req, res, next) => {
     if (req.headers && req.headers.authorization) {
         const token = req.headers.authorization.split('Bearer ')[1].trim();
         verify(token, process.env.JWTSECRET_User, function (err) {
@@ -17,10 +17,10 @@ const authenticate = function (req, res, next) {
         res.status(401).json({ message: messages.JWT_REQUIRED });
     }
 };
-const signJWT = function (result) {
+const signJWT = result => {
     return sign(
         {
-            id: result._id
+            _id: result._id
         },
         process.env.JWTSECRET_USER,
         { expiresIn: constants.JWT_EXPIRES_IN }
@@ -30,8 +30,6 @@ const getIdFromToken = req => {
     const token = req.headers.authorization.split('Bearer ')[1].trim();
     return decode(token);
 };
-console.log(generateSecurePassword());
-
 const getUsers = async (req, res) => {
     const response = await usersModel.find(req.query);
     res.status(200).json(response);
@@ -60,30 +58,49 @@ const registerUser = async (req, res) => {
         const result: any = await usersModel.findOne({ $or: [{ email }, { username }] });
         if (result && result.email === email) return res.status(400).json({ message: messages.USER_EMAIL_EXIST });
         if (result && result.username === username) return res.status(400).json({ message: messages.USER_NAME_EXIST });
-        req.body.password = await hashSync(req.body.password, 12);
+        const { password, passwordHash } = generateSecurePassword();
+        req.body.password = passwordHash;
         req.body.email = email;
         req.body.username = username;
         await new usersModel(req.body).save();
-        res.status(200).json({ message: messages.REGISTERED });
-    } catch (err) {
-        console.log(err);
+        res.status(200).json({ message: messages.REGISTERED, password });
+    } catch (error) {
+        console.log(error);
         res.status(400).json({ message: messages.SOMETHING_WRONG });
     }
 };
-async function login(req, res) {
-    if (validationError(req.body, 'login', res)) return;
-    const { email, password } = req.body;
-    let result: any = await usersModel.findOne({ email });
-    if (result && compareSync(String(password), String(result.password))) {
-        if (result.status == 0) {
-            return res.status(400).json({ message: 'messages.Ad_DEACTIVATED' });
+const login = async (req, res) => {
+    try {
+        if (validationError(req.body, 'login', res)) return;
+        const { username, password } = req.body;
+        let result: any = await usersModel.findOne({ username }, '-createdAt  -updatedAt -__v -role');
+        if (result && compareSync(String(password), String(result.password))) {
+            if (result.status == 0) {
+                return res.status(400).json({ message: messages.Ad_DEACTIVATED });
+            }
+            const token = await signJWT(result);
+            result = result.toObject();
+            delete result['password'];
+            delete result['status'];
+            delete result['_id'];
+            result['token'] = token;
+            return res.status(200).json(result);
         }
-        const token = await signJWT(result);
-        result = result.toObject();
-        delete result['password'];
-        result['token'] = token;
-        return res.status(200).json(result);
+        res.status(400).json({ message: messages.LOGIN_FALIED });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ message: messages.SOMETHING_WRONG });
     }
-    res.status(400).json({ message: messages.LOGIN_FALIED });
-}
-export { authenticate, registerUser, getUsers, signJWT, getIdFromToken, login };
+};
+const getUserProfile = async (req, res) => {
+    try {
+        const { _id } = getIdFromToken(req);
+        console.log('id', _id);
+        const response = await usersModel.findById(_id, '-status -_id -password -createdAt -updatedAt -__v');
+        res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ message: messages.SOMETHING_WRONG });
+    }
+};
+export { authenticate, registerUser, getUsers, signJWT, getIdFromToken, login, getUserProfile };

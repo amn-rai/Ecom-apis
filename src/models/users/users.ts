@@ -17,12 +17,14 @@ const userSchema = new Schema(
         password: String,
         status: {
             type: Number,
-            default: 1 // 1 for active 0 for inactive
+            default: 1 // 1 for active 0 for inactive 2 for pending approval
         },
-        firstName: String,    
+        firstName: String,
         lastName: String,
         phone: Number,
-        designation: String
+        countryCode: String,
+        designation: String,
+        company: Schema.Types.ObjectId
     },
     { timestamps: true }
 );

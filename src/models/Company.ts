@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose';
 const companySchema = new Schema(
     {
-        name: String,
-        GSTNumber: Number,
+        name: { type: String, lowercase: true },
+        GSTNumber: String,
         website: String,
         companyRegistrationNumber: String,
         addressLine1: String,
