@@ -1,5 +1,5 @@
 import { verify, decode, sign } from 'jsonwebtoken';
-import bcrypt, { compareSync, hashSync } from 'bcryptjs';
+import  {genSaltSync, compareSync, hashSync } from 'bcryptjs';
 import { usersModel } from '../../models/users';
 import { validationError } from '../../validators';
 import { messages, constants } from '../../utils/constants';
@@ -52,14 +52,11 @@ const registerUser = async (req, res) => {
         };
 
         if (validationError(req.body, role[req.body.role], res)) return;
-        let { email, username } = req.body;
-        email = email.toLowerCase().trim();
-        username = username.toLowerCase().trim();
+        const { email, username, password } = req.body;
         const result: any = await usersModel.findOne({ $or: [{ email }, { username }] });
         if (result && result.email === email) return res.status(400).json({ message: messages.USER_EMAIL_EXIST });
         if (result && result.username === username) return res.status(400).json({ message: messages.USER_NAME_EXIST });
-        const { password, passwordHash } = generateSecurePassword();
-        req.body.password = passwordHash;
+        req.body.password = hashSync(password, genSaltSync(10));
         req.body.email = email;
         req.body.username = username;
         await new usersModel(req.body).save();

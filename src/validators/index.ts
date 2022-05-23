@@ -33,6 +33,7 @@ function validationObj(method: string): any {
                 phone: Joi.string().min(7).max(12).required(),
                 designation: Joi.string().min(2).max(100).required(),
                 countryCode: Joi.string().min(2).max(100).required(),
+                password: Joi.string().min(6).required(),
                 //Company validation rules started
                 name: Joi.string().min(2).max(100).required(),
                 GSTNumber: Joi.string(),

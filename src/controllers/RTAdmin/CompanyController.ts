@@ -40,7 +40,7 @@ class CompanyController {
     }
     async updateCompany(req: Request, res: Response) {
         try {
-            if (validationError({...req.body,...req.params}, 'createCompany', res)) return;
+            if (validationError({ ...req.body, ...req.params }, 'createCompany', res)) return;
 
             const companyExist = await Company.checkCompanyExist({ name: req.body.name });
 
