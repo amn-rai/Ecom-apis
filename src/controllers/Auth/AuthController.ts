@@ -52,15 +52,15 @@ const registerUser = async (req, res) => {
         };
 
         if (validationError(req.body, role[req.body.role], res)) return;
-        const { email, username, password } = req.body;
-        const result: any = await usersModel.findOne({ $or: [{ email }, { username }] });
+        const { email, password } = req.body;
+        const result: any = await usersModel.findOne({ $or: [{ email }] });
         if (result && result.email === email) return res.status(400).json({ message: messages.USER_EMAIL_EXIST });
-        if (result && result.username === username) return res.status(400).json({ message: messages.USER_NAME_EXIST });
+        // if (result && result.username === username) return res.status(400).json({ message: messages.USER_NAME_EXIST });
         req.body.password = hashSync(password, genSaltSync(10));
         req.body.email = email;
-        req.body.username = username;
+        // req.body.username = username;
         await new usersModel(req.body).save();
-        res.status(200).json({ message: messages.REGISTERED, password });
+        res.status(200).json({ message: messages.REGISTERED });
     } catch (error) {
         console.log(error);
         res.status(400).json({ message: messages.SOMETHING_WRONG });

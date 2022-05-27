@@ -19,6 +19,7 @@ app.use('/api/v1', allRoutes);
 app.get('/', (req, res) => {
     res.send(`<h3 style='text-align:center;'>Culture Intelligence APIs Server :)</h3>`);
 });
+app.use('/static', express.static(__dirname + '/uploads/'));
 app.use('*', (req, res) => {
     console.log('ROUTE NOT FOUND');
     res.status(404).send('ROUTE NOT FOUND');

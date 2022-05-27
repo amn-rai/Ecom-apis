@@ -5,28 +5,21 @@ function validationObj(method: string): any {
     switch (method) {
         case 'login': {
             return Joi.object({
-                username: Joi.string()
-                    .min(3)
-                    .regex(new RegExp(`^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$`))
-                    .required()
-                    .messages({
-                        'string.min': 'User Name must have at least 3 characters',
-                        'string.pattern.base': 'User name is not valid'
-                    }),
+                email: Joi.string().email().required(),
                 password: Joi.string().min(6)
             });
         }
         case 'registerCompanyAdmin': {
             return Joi.object({
                 email: Joi.string().email().required(),
-                username: Joi.string()
-                    .min(3)
-                    .regex(new RegExp(`^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$`))
-                    .required()
-                    .messages({
-                        'string.min': 'User Name must have at least 3 characters',
-                        'string.pattern.base': 'User name is not valid'
-                    }),
+                // username: Joi.string()
+                //     .min(3)
+                //     .regex(new RegExp(`^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$`))
+                //     .required()
+                //     .messages({
+                //         'string.min': 'User Name must have at least 3 characters',
+                //         'string.pattern.base': 'User name is not valid'
+                //     }),
                 firstName: Joi.string().min(3).max(100).required(),
                 role: Joi.number().equal(1).required(),
                 lastName: Joi.string().min(3).max(100).required(),
@@ -45,8 +38,8 @@ function validationObj(method: string): any {
                 state: Joi.string().min(2).max(100).required(),
                 city: Joi.string().min(2).max(100).required(),
                 zipCode: Joi.string().min(2).max(100).required(),
-                company_phone: Joi.string().min(7).max(12).required(),
-                company_email: Joi.string().email().required()
+                // company_phone: Joi.string().min(7).max(12).required(),
+                // company_email: Joi.string().email().required()
             });
         }
         case 'getCompany': {
@@ -84,25 +77,18 @@ function validationObj(method: string): any {
                     })
             });
         }
-        case 'getSingleDropdownData': {
+        case 'getDropdownData': {
             return Joi.object({
-                model: Joi.string()
-                    .valid(
-                        'ageGroup',
-                        'adTypes',
-                        'country',
-                        'demographics',
-                        'industry',
-                        'sentimentsTopic',
-                        'religion',
-                        'occupation',
-                        'disability',
-                        'mediaChannels',
-                        'brands'
-                    )
-                    .required(),
+                model: Joi.string().valid('countries').required(),
                 page: Joi.number().min(1),
                 name: Joi.string()
+            });
+        }
+        case 'addData': {
+            return Joi.object({
+                name: Joi.string().required(),
+                id: Joi.string().custom(isObjectId),
+                model: Joi.string().valid('country').required()
             });
         }
         case 'sendForgotPasswordLink': {
