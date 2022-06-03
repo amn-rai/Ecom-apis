@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { validationError } from '../../validators';
-import { CountriesModel } from '../../models/data';
+import { CountriesModel, StatesModel } from '../../models/data';
 import { messages, constants } from '../../utils/constants';
 import { paginationFun } from '../../utils';
 
@@ -23,6 +23,32 @@ class DropdownController {
             const modelZ = new models[model]({
                 name
             });
+            await modelZ.save();
+            res.json({ message: `${model} added successfully.` });
+        } catch (err) {
+            console.log(err);
+            res.status(400).json({ message: messages.SOMETHING_WRONG });
+        }
+    }
+    async addSubDropdownsData(req: Request, res: Response) {
+        try {
+            if (validationError(req.body, 'addSubDropdownData', res)) return;
+            const { name, model, subdropdownKey, subdropdownValue } = req.body;
+            const models = {
+                state: StatesModel
+            };
+
+            const result = await models[model].findOne({
+                name: new RegExp('^' + name + '$', 'i')
+            });
+
+            if (result) {
+                return res.status(400).json({ message: `${model} already exists.` });
+            }
+            const modelZ = new models[model]({
+                name
+            });
+            modelZ[subdropdownKey] = subdropdownValue;
             await modelZ.save();
             res.json({ message: `${model} added successfully.` });
         } catch (err) {

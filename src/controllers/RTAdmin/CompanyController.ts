@@ -31,7 +31,14 @@ class CompanyController {
     }
     async getCompanies(req: Request, res: Response) {
         try {
-            const response = await paginationFun(CompanyModel, req.query, '-__v', []);
+            const populate = [
+                {
+                    path: 'country',
+                    model: 'countries',
+                    select: 'name'
+                }
+            ];
+            const response = await paginationFun(CompanyModel, req.query, '-__v', populate);
             res.status(200).json(response);
         } catch (error) {
             console.log(error);
