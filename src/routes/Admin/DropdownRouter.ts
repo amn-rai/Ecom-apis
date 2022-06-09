@@ -7,7 +7,7 @@ import {
     getSingleDropdownData,
     addSubDropdownsData,
     updateDropdownData
-} from '../../controllers/RTAdmin/DropdownController';
+} from '../../controllers/Admin/DropdownController';
 import { getDropdowns } from '../../controllers/Common/CommonController';
 router.get('/', getDropdowns);
 router.post('/', addDropdownsData);

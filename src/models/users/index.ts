@@ -1,2 +1,3 @@
-import usersModel from './users';
-export { usersModel };
+import UsersModel from './Admin';
+import AdminModel from './User';
+export { UsersModel, AdminModel };

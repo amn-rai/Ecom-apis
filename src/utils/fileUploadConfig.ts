@@ -12,7 +12,7 @@ const s3 = new aws.S3();
 function uploadSingleFileToLocal(key: string) {
     const storage = multer.diskStorage({
         destination: function (req, file, cb) {
-            cb(null, join(__dirname, '../uploads/file'));
+            cb(null, join(__dirname, '../uploads/file/'));
         },
         filename: function (req, file, cb) {
             cb(null, `file-${Date.now()}${extname(file.originalname)}`);

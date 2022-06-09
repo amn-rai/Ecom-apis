@@ -1,2 +1,3 @@
-import CompanyModel from './Company';
-export { CompanyModel };
+import CategoryModel from './CategoryModel';
+import SubCategoryModel from './SubCategoryModel';
+export { CategoryModel, SubCategoryModel };

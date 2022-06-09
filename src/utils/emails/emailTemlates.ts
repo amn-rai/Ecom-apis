@@ -221,7 +221,7 @@ function _HTML_TEMPLATE_WELLCOME_CREDENTIALS(config: any) {
                 <p style="margin: 0">
                   <b>Hi ${config.name},</b> <br />
                   <br />
-                  We are Delighted to well come you to RTNEST
+                  We are Delighted to well come you to ecom
                   Family. Please Login with these credentials.
                 </p>
                 <br /><br />
@@ -348,7 +348,7 @@ function _HTML_TEMPLATE_WELLCOME_CREDENTIALS(config: any) {
               >
                 <p style="margin: 0">
                   You received this email because we received a request for
-                  RTNEST for your account. If you didn't request
+                  ecom for your account. If you didn't request
                   you can safely delete this email.
                 </p>
               </td>
@@ -397,7 +397,7 @@ function _HTML_TEMPLATE_SEND_FORGOT_PASSWORD(config: any) {
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <title>Reset your RTNEST Password</title>
+  <title>Reset your ecom Password</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style type="text/css">
     /**
@@ -604,7 +604,7 @@ function _HTML_TEMPLATE_SEND_FORGOT_PASSWORD(config: any) {
               <p style="margin-left: 60px">Thanks,</p>
 
               <p style="margin-left: 60px"> The
-                RTNEST team</p>
+                ecom team</p>
               </p>
               <br /><br />
             </td>

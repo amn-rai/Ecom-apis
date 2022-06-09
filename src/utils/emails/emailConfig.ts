@@ -1,7 +1,4 @@
-import {
-    _HTML_TEMPLATE_WELLCOME_CREDENTIALS,
-    _HTML_TEMPLATE_SEND_FORGOT_PASSWORD
-} from './emailTemlates';
+import { _HTML_TEMPLATE_WELLCOME_CREDENTIALS, _HTML_TEMPLATE_SEND_FORGOT_PASSWORD } from './emailTemlates';
 
 const nodemailer = require('nodemailer');
 const fs = require('fs');
@@ -18,13 +15,13 @@ const options = {
 const client = nodemailer.createTransport(sgTransport(options));
 
 async function SendWellComeCredentialsEmail(config) {
-    const loginHere = `http://www.rtnest.ca/login?iam=${config.iam}`;
+    const loginHere = `http://www.ecom.ca/login?iam=${config.iam}`;
     config.loginHere = loginHere;
     const email = {
-        from: 'no-reply@rtnest.ca',
-        fromname: 'RTNEST',
+        from: 'no-reply@ecom.ca',
+        fromname: 'ecom',
         to: config.email,
-        subject: 'You have been invited to RTNEST',
+        subject: 'You have been invited to ecom',
         html: _HTML_TEMPLATE_WELLCOME_CREDENTIALS(config)
     };
 
@@ -39,10 +36,10 @@ async function SendWellComeCredentialsEmail(config) {
 
 async function SendResetPasswordEmail(config) {
     const email = {
-        from: 'no-reply@rtnest.ca',
-        fromname: 'RTNEST',
+        from: 'no-reply@ecom.ca',
+        fromname: 'ecom',
         to: config.email,
-        subject: 'Reset your RTNEST Password.',
+        subject: 'Reset your ecom Password.',
         html: _HTML_TEMPLATE_SEND_FORGOT_PASSWORD(config)
     };
 
@@ -54,7 +51,4 @@ async function SendResetPasswordEmail(config) {
         }
     });
 }
-export {
-    SendWellComeCredentialsEmail,
-    SendResetPasswordEmail
-};
+export { SendWellComeCredentialsEmail, SendResetPasswordEmail };

@@ -1,15 +1,6 @@
 import { Schema, model } from 'mongoose';
 const userSchema = new Schema(
     {
-        role: Number,
-        /*
-        0 - RT Admin
-        1 - Company Admin
-        2 - Accountant
-        3 - Vendor
-        */
-        name: String,
-        username: String,
         email: {
             type: String,
             lowercase: true
@@ -21,10 +12,9 @@ const userSchema = new Schema(
         },
         firstName: String,
         lastName: String,
+        profilepic: String,
         phone: Number,
-        countryCode: String,
-        designation: String,
-        company: Schema.Types.ObjectId
+        countryCode: String
     },
     { timestamps: true }
 );

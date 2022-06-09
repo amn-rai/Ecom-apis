@@ -9,66 +9,34 @@ function validationObj(method: string): any {
                 password: Joi.string().min(6)
             });
         }
-        case 'registerCompanyAdmin': {
+        case 'registerUser': {
             return Joi.object({
                 email: Joi.string().email().required(),
                 firstName: Joi.string().min(3).max(100).required(),
-                role: Joi.number().equal(1).required(),
                 lastName: Joi.string().min(3).max(100).required(),
                 phone: Joi.string().min(7).max(12).required(),
-                // designation: Joi.string().min(2).max(100).required(),
-                countryCode: Joi.string().min(2).max(100).required(),
-                password: Joi.string().min(6).required(),
-                //Company validation rules started
-                name: Joi.string().min(2).max(100).required(),
-                GSTNumber: Joi.string(),
-                website: Joi.string().uri().required(),
-                companyRegistrationNumber: Joi.string().min(2).max(100).required(),
-                addressLine1: Joi.string().min(2).max(100).required(),
-                addressLine2: Joi.string().min(2).max(100),
-                country: Joi.string().min(2).max(100).required(),
-                state: Joi.string().min(2).max(100).required(),
-                city: Joi.string().min(2).max(100).required(),
-                zipCode: Joi.string().min(2).max(100).required()
-                // company_phone: Joi.string().min(7).max(12).required(),
-                // company_email: Joi.string().email().required()
+                password: Joi.string().min(6).required()
             });
         }
-        case 'getCompany': {
+        case 'get': {
             return Joi.object({
                 id: Joi.custom(isObjectId).required()
             });
         }
-        case 'createCompany': {
+        case 'getSubCategories': {
             return Joi.object({
-                name: Joi.string().min(2).max(100).required(),
-                GSTNumber: Joi.string(),
-                website: Joi.string().uri().required(),
-                companyRegistrationNumber: Joi.string().min(2).max(100).required(),
-                addressLine1: Joi.string().min(2).max(100).required(),
-                addressLine2: Joi.string().min(2).max(100).required(),
-                country: Joi.string().min(2).max(100).required(),
-                state: Joi.string().min(2).max(100).required(),
-                city: Joi.string().min(2).max(100).required(),
-                zipCode: Joi.string().min(2).max(100).required(),
-                // phone: Joi.string().min(7).max(12).required(),
-                // email: Joi.string().email().required(),
-                id: Joi.custom(isObjectId)
+                category: Joi.custom(isObjectId),
+                page: Joi.number(),
+                name: Joi.string()
             });
         }
-        case 'userNameExist': {
+        case 'getCategories': {
             return Joi.object({
-                username: Joi.string()
-                    .min(3)
-                    .lowercase()
-                    .regex(new RegExp(`^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$`))
-                    .required()
-                    .messages({
-                        'string.min': 'User Name must have at least 3 characters',
-                        'string.pattern.base': 'User name is not valid'
-                    })
+                page: Joi.number(),
+                name: Joi.string()
             });
         }
+
         case 'getDropdownData': {
             return Joi.object({
                 model: Joi.string().valid('countries', 'states').required(),
@@ -97,11 +65,34 @@ function validationObj(method: string): any {
                 email: Joi.string().email().required()
             });
         }
+        case 'AddCategory': {
+            return Joi.object({
+                name: Joi.string().min(2).required()
+            });
+        }
+        case 'AddSubCategory': {
+            return Joi.object({
+                name: Joi.string().min(2).required(),
+                category: Joi.string().custom(isObjectId).required()
+            });
+        }
         case 'resetPassword': {
             return Joi.object({
                 email: Joi.string().email().required(),
                 token: Joi.string().required(),
                 password: Joi.string().min(6).max(100).required()
+            });
+        }
+        case 'AddProduct': {
+            return Joi.object({
+                name: Joi.string().required(),
+                description: Joi.string().required(),
+                category: Joi.string().custom(isObjectId).required(),
+                subcategory: Joi.string().custom(isObjectId).required(),
+                price: Joi.number().required(),
+                discount: Joi.number().required(),
+                tax: Joi.number().required(),
+                qunatity: Joi.number().required()
             });
         }
     }
