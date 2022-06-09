@@ -18,7 +18,8 @@ class ProductController {
             try {
                 if (validators_1.validationError(req.body, 'AddProduct', res))
                     return;
-                req.body.productimg = `/static/file/${req.file.filename}`;
+                console.log('req.file', req.file);
+                req.body.productimg = req.file.location;
                 yield new Products_1.ProductModel(req.body).save();
                 res.status(200).json({ message: constants_1.messages.PRODUCT_ADDED });
             }

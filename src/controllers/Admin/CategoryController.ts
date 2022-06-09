@@ -9,7 +9,7 @@ class CategoryController {
     async addCategory(req, res) {
         try {
             if (validationError(req.body, 'AddCategory', res)) return;
-            req.body.logo = `/static/file/${req.file.filename}`;
+            req.body.logo = req.file.location
 
             await new CategoryModel(req.body).save();
             res.status(200).json({ message: messages.Category_ADDED });
@@ -33,7 +33,7 @@ class CategoryController {
         try {
             if (validationError(req.query, 'getCategories', res)) return;
             if (req.query.name) {
-                req.query.name = new RegExp('^' + req.query.name ,'i');
+                req.query.name = new RegExp('^' + req.query.name, 'i');
             }
             const populate = [];
             const response = await paginationFun(CategoryModel, req.query, '-__v -createdAt -updatedAt', populate);

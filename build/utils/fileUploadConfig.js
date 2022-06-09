@@ -9,9 +9,9 @@ const multer_1 = __importDefault(require("multer"));
 const multer_s3_1 = __importDefault(require("multer-s3"));
 const path_1 = require("path");
 aws_sdk_1.default.config.update({
-    // secretAccessKey: '',
-    // accessKeyId: '',
-    region: ''
+    secretAccessKey: 'xW1QYjCafZyNGo0hu8Ldzs5y/o7NBB38kxlHBig2',
+    accessKeyId: 'AKIA4F2DDDIQNCHE424M',
+    region: 'ap-south-1'
 });
 const s3 = new aws_sdk_1.default.S3();
 function uploadSingleFileToLocal(key) {
@@ -31,7 +31,7 @@ function uploadSingleFileToS3(key) {
     return multer_1.default({
         storage: multer_s3_1.default({
             s3: s3,
-            bucket: 'baclassic',
+            bucket: 'ecom-aman',
             key: function (req, file, cb) {
                 cb(null, `${key}/file-${Date.now()}${path_1.extname(file.originalname)}`);
             },
