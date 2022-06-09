@@ -17,7 +17,7 @@ app.use(morgan('tiny'));
 
 app.use('/api/v1', allRoutes);
 app.get('/', (req, res) => {
-    res.send(`<h3 style='text-align:center;'>Culture Intelligence APIs Server :)</h3>`);
+    res.send(`<h3 style='text-align:center;'>ECOM APIs Server :)</h3>`);
 });
 app.use('/static', express.static(__dirname + '/uploads/'));
 app.use('*', (req, res) => {
