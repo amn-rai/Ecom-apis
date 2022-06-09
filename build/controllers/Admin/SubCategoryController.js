@@ -18,7 +18,7 @@ class SubCategoryController {
             try {
                 if (validators_1.validationError(req.body, 'AddSubCategory', res))
                     return;
-                req.body.logo = `/static/file/${req.file.filename}`;
+                req.body.logo = req.file.location;
                 yield new models_1.SubCategoryModel(req.body).save();
                 res.status(200).json({ message: constants_1.messages.SubCategory_ADDED });
             }
