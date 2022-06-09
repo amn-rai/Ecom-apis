@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 export const PORT = process.env.PORT;
 export const DATABASE = {
-    host: process.env.MONGODB_HOST_2,
-    // host: process.env.mongodb_host_TEST,
-    name: process.env.MONGODB_DB
-    // name: process.env.MONGODB_DB_TEST
+    // host: process.env.MONGODB_HOST_2,
+    host: process.env.mongodb_host_TEST,
+    // name: process.env.MONGODB_DB
+    name: process.env.MONGODB_DB_TEST
+
 };
 console.log('Database', DATABASE);
 mongoose.set('useFindAndModify', false);
