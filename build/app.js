@@ -20,7 +20,7 @@ app.use(cors_1.default());
 app.use(morgan_1.default('tiny'));
 app.use('/api/v1', routes_1.default);
 app.get('/', (req, res) => {
-    res.send(`<h3 style='text-align:center;'>Culture Intelligence APIs Server :)</h3>`);
+    res.send(`<h3 style='text-align:center;'>ECOM APIs Server :)</h3>`);
 });
 app.use('/static', express_1.default.static(__dirname + '/uploads/'));
 app.use('*', (req, res) => {
