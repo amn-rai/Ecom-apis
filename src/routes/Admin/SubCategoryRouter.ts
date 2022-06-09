@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router: Router = Router();
-import { uploadSingleFileToLocal } from '../../utils/fileUploadConfig';
+import { uploadSingleFileToS3 } from '../../utils/fileUploadConfig';
 import {
     addSubCategory,
     getSubCategory,
@@ -8,7 +8,7 @@ import {
     updateSubCategory
 } from '../../controllers/Admin/SubCategoryController';
 
-router.post('/', uploadSingleFileToLocal('logo'), addSubCategory);
+router.post('/', uploadSingleFileToS3('logo'), addSubCategory);
 router.get('/', getSubCategorys);
 router.get('/:id', getSubCategory);
 router.put('/', updateSubCategory);

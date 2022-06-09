@@ -1,9 +1,9 @@
 import { Router } from 'express';
 const router: Router = Router();
-import { uploadSingleFileToLocal } from "../../utils/fileUploadConfig";
+import { uploadSingleFileToS3 } from '../../utils/fileUploadConfig';
 import { addCategory, getCategory, getCategorys, updateCategory } from '../../controllers/Admin/CategoryController';
 
-router.post('/',uploadSingleFileToLocal('logo'), addCategory);
+router.post('/', uploadSingleFileToS3('logo'), addCategory);
 router.get('/', getCategorys);
 router.get('/:id', getCategory);
 router.put('/', updateCategory);

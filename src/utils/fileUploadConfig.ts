@@ -3,9 +3,9 @@ import multer from 'multer';
 import multerS3 from 'multer-s3';
 import { extname, join } from 'path';
 aws.config.update({
-    // secretAccessKey: '',
-    // accessKeyId: '',
-    region: ''
+    secretAccessKey: 'xW1QYjCafZyNGo0hu8Ldzs5y/o7NBB38kxlHBig2',
+    accessKeyId: 'AKIA4F2DDDIQNCHE424M',
+    region: 'ap-south-1'
 });
 const s3 = new aws.S3();
 
@@ -26,7 +26,7 @@ function uploadSingleFileToS3(key: string) {
     return multer({
         storage: multerS3({
             s3: s3,
-            bucket: 'baclassic',
+            bucket: 'ecom-aman',
             key: function (req, file, cb) {
                 cb(null, `${key}/file-${Date.now()}${extname(file.originalname)}`);
             },
