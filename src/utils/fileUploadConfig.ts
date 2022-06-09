@@ -12,7 +12,7 @@ const s3 = new aws.S3();
 function uploadSingleFileToLocal(key: string) {
     const storage = multer.diskStorage({
         destination: function (req, file, cb) {
-            cb(null, join(__dirname, '../uploads/csv'));
+            cb(null, join(__dirname, '../uploads/file/'));
         },
         filename: function (req, file, cb) {
             cb(null, `file-${Date.now()}${extname(file.originalname)}`);
@@ -21,18 +21,7 @@ function uploadSingleFileToLocal(key: string) {
     const upload = multer({ storage });
     return upload.single(key);
 }
-function uploadSingleFileToLocal_Invoice(key: string) {
-    const storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-            cb(null, join(__dirname, '../uploads/invoices'));
-        },
-        filename: function (req, file, cb) {
-            cb(null, `file-${Date.now()}${extname(file.originalname)}`);
-        }
-    });
-    const upload = multer({ storage });
-    return upload.single(key);
-}
+
 function uploadSingleFileToS3(key: string) {
     return multer({
         storage: multerS3({
@@ -92,7 +81,6 @@ function isVideo(filename) {
 }
 export {
     uploadSingleFileToS3,
-    uploadSingleFileToLocal_Invoice,
     uploadMultipleFileToS3,
     isImage,
     isVideo,
