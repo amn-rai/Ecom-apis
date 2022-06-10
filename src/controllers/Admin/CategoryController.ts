@@ -9,7 +9,8 @@ class CategoryController {
     async addCategory(req, res) {
         try {
             if (validationError(req.body, 'AddCategory', res)) return;
-            req.body.logo = req.file.location
+            // req.body.logo = req.file.location
+            req.body.logo = `/static/file/${req.file.filename}`;
 
             await new CategoryModel(req.body).save();
             res.status(200).json({ message: messages.Category_ADDED });
