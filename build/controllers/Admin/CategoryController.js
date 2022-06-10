@@ -18,7 +18,8 @@ class CategoryController {
             try {
                 if (validators_1.validationError(req.body, 'AddCategory', res))
                     return;
-                req.body.logo = req.file.location;
+                // req.body.logo = req.file.location
+                req.body.logo = `/static/file/${req.file.filename}`;
                 yield new models_1.CategoryModel(req.body).save();
                 res.status(200).json({ message: constants_1.messages.Category_ADDED });
             }
